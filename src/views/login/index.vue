@@ -55,9 +55,10 @@ export default {
             method: 'post',
             data: this.loginForm
           }).then((resturl) => {
-            window.localStorage.setItem('user-token', resturl.data.data.token)
+            window.localStorage.setItem('user-token', resturl.data.token)
             this.$router.push('/home')
-          }).catch(() => {
+          }).catch((error) => {
+            alert(error)
             this.$message({
               type: 'warning',
               message: '账号或密码输入错误'

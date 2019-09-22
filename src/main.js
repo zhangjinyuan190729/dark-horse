@@ -4,12 +4,14 @@ import router from './permission'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './style/index.less'
-import component from './components/index.js'
+import component from './components/index'
+import axios from './utils/axios.config.js'
 Vue.config.productionTip = false
+Vue.prototype.$axios = axios
 Vue.use(ElementUI)
 Vue.use(component)
 // 配置url全局常项
-// axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'
+axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'
 
 new Vue({
   router,
