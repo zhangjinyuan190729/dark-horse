@@ -26,6 +26,13 @@
 <script>
 export default {
   data () {
+    let validator = function (rule, value, callBack) {
+      if (value) {
+        callBack()
+      } else {
+        callBack(new Error('您未同意协议，请先同意'))
+      }
+    }
     return {
       loginForm: {
         mobile: '',
@@ -33,8 +40,9 @@ export default {
         checked: ''
       },
       loginRules: {
-        mobile: [{ required: true, message: '请输入手机号' }],
-        code: [{ required: true, message: '请输入验证码' }]
+        mobile: [{ required: true, message: '请输入手机号' }, { pattern: /^1[3456789]\d{9}$/, message: '请您输入合法的手机号' }],
+        code: [{ required: true, message: '请输入验证码' }, { pattern: /^\d{6}$/, message: '请您输入六位数验证码' }],
+        checked: [{ validator }]
       }
     }
   },
@@ -42,7 +50,20 @@ export default {
     submit () {
       this.$refs.myfrom.validate((valid) => {
         if (valid) {
-          console.log('ok')
+          this.$axios({
+            url: '/authorizations',
+            method: 'post',
+            data: this.loginForm
+          }).then((resturl) => {
+            window.localStorage.setItem('use-token', resturl.data.data.token)
+            this.$router.push('/home')
+          }).catch(() => {
+            this.$message({
+              type: 'warning',
+              message: '账号或密码输入错误'
+
+            })
+          })
         }
       })
     }
@@ -70,7 +91,6 @@ position: relative;
       img{
         width: 200px;
         height: 40px;
-
       }
     }
   }
