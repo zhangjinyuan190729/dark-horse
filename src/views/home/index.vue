@@ -2,7 +2,7 @@
       <!-- 大容器 -->
     <el-container>
 <!-- 侧边栏容器 -->
-      <el-aside width="200px">
+      <el-aside width="200px" style="background-color:#323745">
         <!-- 侧边栏模块 -->
         <layout-aside></layout-aside>
       </el-aside>
