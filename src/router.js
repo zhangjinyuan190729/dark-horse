@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './views/home/index'
 import Main from './views/home/main'
 import login from './views/login'
+import Agreement from './views/agreement'
 Vue.use(Router)
 
 export default new Router({
@@ -26,6 +27,10 @@ export default new Router({
     {
       path: '/login',
       component: login
+    },
+    {
+      path: '/agreement',
+      component: Agreement
     }
     // {
     //   path: '/about',

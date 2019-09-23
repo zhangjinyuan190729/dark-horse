@@ -13,7 +13,7 @@
          <el-input v-model="loginForm.code" style="width:65%" placeholder="请输入验证码"></el-input> <el-button style="float:right">发送验证码</el-button>
        </el-form-item>
        <el-form-item prop="checked">
-         <el-checkbox v-model="loginForm.checked"><span style="color:#606266">我已阅读并同意<a href="" style="color:#409EFF">用户协议</a>和<a href="" style="color:#409EFF">隐私条款</a></span></el-checkbox>
+         <el-checkbox v-model="loginForm.checked"><span style="color:#606266">我已阅读并同意<a @click="Agreement" style="color:#409EFF">用户协议</a>和<a href="" style="color:#409EFF">隐私条款</a></span></el-checkbox>
        </el-form-item>
        <el-form-item>
          <el-button type="primary" style="width:100%" @click="submit">登录</el-button>
@@ -67,6 +67,9 @@ export default {
           })
         }
       })
+    },
+    Agreement () {
+      this.$router.push('/agreement')
     }
   }
 

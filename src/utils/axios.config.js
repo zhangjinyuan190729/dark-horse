@@ -1,7 +1,14 @@
 import axios from 'axios'
+import Bigjson from 'json-bigint'
 import router from '../permission'
 import { Message } from 'element-ui'
+
+// 处理大数字bug
+axios.defaults.transformResponse = [function (data) {
+  return data ? Bigjson.parse(data) : {}
+}]
 // 请求拦截  参数 成功函数  失败函数
+
 axios.interceptors.request.use(function (config) {
   // 成功后把token赛道每个请求的请求头里
   config.headers['Authorization'] = `Bearer ${window.localStorage.getItem('user-token')}`
@@ -14,7 +21,13 @@ axios.interceptors.request.use(function (config) {
 axios.interceptors.response.use(function (config) {
   return config.data ? config.data : {}
 }, function (error) {
-  let status = error.response.status
+  let status
+  if (error.response) {
+    status = error.response.status
+  } else {
+    status = ''
+  }
+
   let message = '未知错误'
   switch (status) {
     case 400:

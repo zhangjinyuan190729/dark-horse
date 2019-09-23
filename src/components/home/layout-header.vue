@@ -1,5 +1,5 @@
 <template>
-  <el-row type="flex" justify="space-between" align="middle">
+  <el-row type="flex" justify="space-between" align="middle" class="alyout-header">
       <!-- 左侧内容 -->
       <el-col :span="6">
           <i class="el-icon-s-unfold" style="font-size:22px; "></i>
@@ -56,5 +56,5 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style scoped>
+</style>>

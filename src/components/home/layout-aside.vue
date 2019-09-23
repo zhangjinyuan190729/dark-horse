@@ -56,6 +56,7 @@ export default {
   width: 200px;
   background-color: #323745;
   overflow: hidden;
+  position: fixed;
   .title{
     text-align: center;
     background-color: #2e2f32;

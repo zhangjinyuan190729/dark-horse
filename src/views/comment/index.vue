@@ -11,8 +11,10 @@
         <el-table-column align="center" label="总评论数" prop="total_comment_count" ></el-table-column>
         <el-table-column align="center" label="粉丝评论数" prop="fans_comment_count" ></el-table-column>
         <el-table-column align="center" label="操作">
-          <el-button size="small" type="text">修改</el-button>
-          <el-button size="small" type="text">关闭评论</el-button>
+          <template slot-scope="obj">
+            <el-button size="small" type="text">修改</el-button>
+          <el-button size="small" type="text" @click="openORcolse(obj.row)">{{obj.row.comment_status?'关闭评论':'打开评论'}}</el-button>
+          </template>
         </el-table-column>
     </el-table>
   </el-card>
@@ -36,6 +38,19 @@ export default {
     },
     formatter (row, column, cellvale, index) {
       return cellvale ? '正常' : '关闭'
+    },
+    openORcolse (row) {
+      let mess = row.comment_status ? '关闭' : '打开'
+      this.$confirm(`您确定${mess}评论?`, '温馨提示').then(() => {
+        this.$axios({
+          url: 'comments/status',
+          method: 'put',
+          params: { article_id: row.id.toString() },
+          data: { allow_comment: !row.comment_status }
+        }).then(() => {
+          this.getComment()
+        })
+      })
     }
   },
   created () {
