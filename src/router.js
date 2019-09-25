@@ -21,6 +21,9 @@ export default new Router({
       }, {
         path: 'comment', // 按需加载
         component: () => import('./views/comment')
+      }, {
+        path: 'material', // 按需加载
+        component: () => import('./views/material')
       }]
 
     },
