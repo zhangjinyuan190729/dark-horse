@@ -7,7 +7,7 @@
       <el-button size="small" type="primary">上传图片</el-button>
     </el-upload>
     <!-- 默认绑定 -->
-    <el-tabs v-model="activeName" @tab-click="chagetab">
+    <el-tabs v-model="activeName" @tab-click="chagetab" v-location>
       <el-tab-pane label="全部" name="all">
         <div class="img-list">
           <el-card
@@ -19,8 +19,8 @@
             <img :src="item.url" alt />
             <!-- 收藏 删除 -->
             <div class="down">
-              <i class="el-icon-star-on" :style="{color:item.is_collected?'red':'#000'}"></i>
-              <i class="el-icon-delete-solid"></i>
+              <i class="el-icon-star-on" :style="{color:item.is_collected?'red':'#000'}" @click="Collect(item)"></i>
+              <i class="el-icon-delete-solid" @click="delImg(item.id)"></i>
             </div>
           </el-card>
         </div>
@@ -61,6 +61,30 @@ export default {
     }
   },
   methods: {
+    delImg (id) {
+      this.$confirm('您确定要删除此图片吗？').then(() => {
+        this.$axios({
+          url: `/user/images/${id}`,
+          method: 'delete'
+        }).then(result => {
+          this.getMaterial()
+        })
+      })
+    },
+    // 收藏
+    Collect (item) {
+      let mess = item.is_collected ? '取消' : ''
+      this.$confirm(`您确定要${mess}收藏此图片吗？`).then(() => {
+        this.$axios({
+          url: `/user/images/${item.id}`,
+          method: 'put',
+          data: { collect: !item.is_collected }
+        }).then(result => {
+          this.getMaterial()
+        })
+      })
+    },
+    // 上传素材
     uploadImg (params) {
       const data = new FormData() // 声明一个新的表单
       data.append('image', params.file)

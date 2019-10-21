@@ -18,12 +18,18 @@ export default new Router({
       children: [{
         path: '',
         component: Main
-      }, {
+      },
+      {
         path: 'comment', // 按需加载
         component: () => import('./views/comment')
-      }, {
+      },
+      {
         path: 'material', // 按需加载
         component: () => import('./views/material')
+      },
+      {
+        path: 'articles', // 按需加载
+        component: () => import('./views/articles')
       }]
 
     },
